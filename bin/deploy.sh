@@ -36,7 +36,8 @@ echo "===================================================="
 # 1. Neuesten Stand holen
 echo ""
 echo "[1/7] Git Pull..."
-git pull --ff-only
+git fetch origin
+git reset --hard origin/master
 
 # 2. composer.phar prüfen
 echo ""
