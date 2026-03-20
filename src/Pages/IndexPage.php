@@ -107,6 +107,7 @@ HTML;
 					<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
 					<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 					<script>
+					  L.Icon.Default.imagePath = 'https://unpkg.com/leaflet@1.9.4/dist/images/';
 					  const map = L.map('map').setView([{$lat}, {$lon}], 13);
 					  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 						attribution: '&copy; OpenStreetMap contributors'
