@@ -30,10 +30,15 @@ class Router
 
         // Koordinatenaufbereitung
         $geo = null;
-        if ($lat !== null && $lon !== null) {
-            $geo = new GeoParam($lat, $lon);
-        } elseif ($params !== null && $params !== '') {
-            $geo = GeoParam::fromGeoHackParams($params);
+        try {
+            if ($lat !== null && $lon !== null) {
+                $geo = new GeoParam($lat, $lon);
+            } elseif ($params !== null && $params !== '') {
+                $geo = GeoParam::fromGeoHackParams($params);
+            }
+        } catch (\InvalidArgumentException) {
+            FormPage::render();
+            return;
         }
 
         // Exportfunktion
