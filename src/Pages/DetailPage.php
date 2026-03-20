@@ -90,12 +90,12 @@ HTML;
 					<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
 					<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 					<script>
-					  L.Icon.Default.imagePath = 'https://unpkg.com/leaflet@1.9.4/dist/images/';
+					  const markerIcon = L.divIcon({ html: '<i class="bi bi-geo-alt-fill" style="font-size:1.8rem;color:#0d6efd;line-height:1"></i>', className: '', iconAnchor: [9, 30], popupAnchor: [0, -30] });
 					  const map = L.map('map').setView([{$lat}, {$lon}], 13);
 					  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 						attribution: '&copy; OpenStreetMap contributors'
 					  }).addTo(map);
-					  L.marker([{$lat}, {$lon}]).addTo(map)
+					  L.marker([{$lat}, {$lon}], {icon: markerIcon}).addTo(map)
 						.bindPopup('Koordinaten<br>{$lat}, {$lon}').openPopup();
 
 					  function filterLinks() {
