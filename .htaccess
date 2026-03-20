@@ -43,11 +43,11 @@ php_value error_log         logs/php_errors.log
     # CDN-Quellen für Bootstrap, Bootstrap Icons, Leaflet erlauben
     Header always set Content-Security-Policy "\
 default-src 'self'; \
-script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com; \
+script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com https://analytics.mrblackrocket.com; \
 style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com; \
 font-src 'self' https://cdn.jsdelivr.net; \
-img-src 'self' data: https://*.tile.openstreetmap.org https://*.openstreetmap.org; \
-connect-src 'self' https://nominatim.openstreetmap.org; \
+img-src 'self' data: https://*.tile.openstreetmap.org https://*.openstreetmap.org https://analytics.mrblackrocket.com; \
+connect-src 'self' https://nominatim.openstreetmap.org https://analytics.mrblackrocket.com; \
 frame-ancestors 'none';"
 </IfModule>
 
