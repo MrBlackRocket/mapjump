@@ -1,0 +1,9 @@
+# Einheitliche Zeilenenden: LF auf allen Plattformen (Linux-Server)
+* text=auto eol=lf
+
+# Binärdateien nie konvertieren
+*.mmdb    binary
+*.mmdb.gz binary
+*.png     binary
+*.jpg     binary
+*.ico     binary

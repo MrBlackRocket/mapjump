@@ -1,0 +1,32 @@
+# Abhängigkeiten
+/vendor/
+
+# Sensible Konfiguration
+/config/.env
+
+# Datenbanken & Geodaten
+/data/*.mmdb
+/data/*.mmdb.gz
+
+# Cache & Logs (Verzeichnis via .gitkeep tracken, Inhalt ignorieren)
+/cache/*
+!/cache/.gitkeep
+/logs/*
+!/logs/.gitkeep
+
+# Composer
+composer.phar
+.php-cs-fixer.cache
+.psalm/
+
+# Betriebssystem
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Claude Code
+.claude/

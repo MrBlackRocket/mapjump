@@ -1,0 +1,41 @@
+{
+  "name": "mapjump/mapjump",
+  "description": "A simple coordinate-based map link tool",
+  "type": "project",
+  "license": "GPLv3",
+  "autoload": {
+    "psr-4": {
+      "Geo\\Pages\\": "src/Pages/",
+      "Geo\\": "src/"
+    },
+    "files": [
+      "src/bootstrap.php"
+    ]
+  },
+  "require": {
+    "php": ">=8.3",
+    "monolog/monolog": "^3.0",
+    "vlucas/phpdotenv": "^5.5",
+    "geoip2/geoip2": "^2.12",
+    "voku/anti-xss": "^4.1",
+    "jaybizzle/crawler-detect": "^1.2"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.7",
+    "friendsofphp/php-cs-fixer": "^3.50",
+    "vimeo/psalm": "^5.18"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "@composer dump-autoload"
+    ],
+    "post-update-cmd": [
+      "@composer dump-autoload"
+    ],
+    "lint": "vendor/bin/phpcs --standard=.phpcs.xml.dist src/ --colors -s --exclude=Generic.Files.LineLength",
+    "fix": "vendor/bin/php-cs-fixer fix src/ --rules=@PSR12",
+    "analyze": "psalm"
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}
