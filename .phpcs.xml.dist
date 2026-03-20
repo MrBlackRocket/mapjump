@@ -2,12 +2,10 @@
 <ruleset name="MapJump Ruleset">
   <description>Custom ruleset based on PSR-12 with adjusted exclusions</description>
 
-  <!-- Baseline: PSR-12 -->
-  <rule ref="PSR12" />
-
-  <!-- Ausnahmen: Deaktiviere spezifische Regeln -->
-  <exclude name="Generic.Files.LineLength.TooLong" />
-  <exclude name="Generic.Files.LineLength" />
+  <!-- Baseline: PSR-12 mit Ausnahme für Zeilenlänge (URLs, HTML-Templates) -->
+  <rule ref="PSR12">
+    <exclude name="Generic.Files.LineLength" />
+  </rule>
 
   <!-- Projektverzeichnis -->
   <file>src</file>

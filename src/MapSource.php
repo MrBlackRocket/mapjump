@@ -106,7 +106,7 @@ class MapSource
 
         foreach ($sources as $group) {
             foreach ($group as $entry) {
-                if (isset($entry['alias']) && strtolower($entry['alias']) === strtolower($alias)) {
+                if (strtolower($entry['alias']) === strtolower($alias)) {
                     return str_replace(['@LAT@', '@LON@'], [strval($lat), strval($lon)], $entry['url']);
                 }
             }

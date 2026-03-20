@@ -27,6 +27,10 @@ class StaticPage
         }
 
         $content = file_get_contents($filename);
+        if ($content === false) {
+            Layout::render("Seite nicht gefunden", "<p class='text-danger'>Die Seite konnte nicht geladen werden.</p>");
+            return;
+        }
         $title = ucfirst($view);
         Layout::render("MapJump – " . $title, $content);
     }

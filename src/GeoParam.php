@@ -54,10 +54,10 @@ class GeoParam
 
         foreach ($parts as $i => $part) {
             if (preg_match('/^[NS]$/i', $part) && $latDecimal === null) {
-                $latDecimal = self::dirPartsToDecimal($parts, $i);
+                $latDecimal = self::dirPartsToDecimal($parts, (int)$i);
             }
             if (preg_match('/^[EW]$/i', $part) && $lonDecimal === null) {
-                $lonDecimal = self::dirPartsToDecimal($parts, $i);
+                $lonDecimal = self::dirPartsToDecimal($parts, (int)$i);
             }
         }
 
@@ -75,9 +75,11 @@ class GeoParam
      * Unterstützt D-, DM- und DMS-Format.
      *
      * @param string[] $parts
+     * @return float
      */
     private static function dirPartsToDecimal(array $parts, int $dirIndex): float
     {
+        /** @var float[] $nums */
         $nums = [];
         for ($j = $dirIndex - 1; $j >= 0; $j--) {
             if (!is_numeric($parts[$j])) {
@@ -87,11 +89,11 @@ class GeoParam
         }
 
         $decimal  = $nums[0] ?? 0.0;
-        $decimal += ($nums[1] ?? 0.0) / 60;
-        $decimal += ($nums[2] ?? 0.0) / 3600;
+        $decimal += ($nums[1] ?? 0.0) / 60.0;
+        $decimal += ($nums[2] ?? 0.0) / 3600.0;
 
         if (preg_match('/^[SW]$/i', $parts[$dirIndex])) {
-            $decimal *= -1;
+            $decimal *= -1.0;
         }
 
         return $decimal;
