@@ -1,0 +1,26 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Was ist MapJump?</h5>
+    <p class="card-text">MapJump ist ein Geolink-Dienst, der auf Basis von Koordinaten Kartenlinks zu unterschiedlichen Kartendiensten erstellt.</p>
+
+	<h5>Beispielhafte Verwendung</h5>
+	<p>Folgende URL zeigt den Ort Berlin an:<br>
+	<code>https://sonicscrewdriver.mbr.mobi/mapjump/index.php?params=52_30_N_13_23_E&amp;title=Berlin</code></p>
+
+	<ul>
+	  <li><strong>params=</strong> – Koordinaten im Format: 52_30_N_13_23_E oder als Dezimalzahl z.B. lat=52.5&amp;lon=13.3833</li>
+	  <li><strong>title=</strong> – Optionaler Seitentitel</li>
+	  <li><strong>service=</strong> – Optional, um direkt zur Detailansicht eines Dienstes zu springen</li>
+	  <li><strong>output=</strong> – Optional, erlaubt den Export (z.B. csv, json, kml, vcard, geojson)</li>
+	</ul>
+
+	<h5>Verfügbare Formate für <code>output=</code></h5>
+	<ul>
+	  <li><code>json</code> – JSON-Daten mit Koordinaten, Adresse, Links</li>
+	  <li><code>geojson</code> – GeoJSON-Format für Kartenanwendungen</li>
+	  <li><code>csv</code> – Kommagetrennte Koordinaten</li>
+	  <li><code>kml</code> – Google Earth / GIS</li>
+	  <li><code>vcard</code> – Visitenkarte mit Position</li>
+	</ul>
+  </div>
+</div>

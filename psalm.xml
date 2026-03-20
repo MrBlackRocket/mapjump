@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<psalm
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://getpsalm.org/schema/config.xsd"
+    name="MapJump"
+    errorLevel="1"
+    resolveFromConfigFile="true"
+    findUnusedCode="true"
+    findUnusedVariablesAndParams="true"
+>
+    <projectFiles>
+        <directory name="src" />
+    </projectFiles>
+
+    <issueHandlers>
+        <LessSpecificReturnType errorLevel="info" />
+        <MissingReturnType errorLevel="info" />
+    </issueHandlers>
+</psalm>
