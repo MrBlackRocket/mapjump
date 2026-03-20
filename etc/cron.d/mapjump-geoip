@@ -10,7 +10,4 @@
 # │  │  │  ┌─ Monat (jeder)
 # │  │  │  │  ┌─ Wochentag (jeder)
 # │  │  │  │  │
-23  3  1  *  *  /usr/bin/php /www/htdocs/w017d4f9/sonicscrewdriver.mbr.mobi/mapjump/bin/update-geoip.php >> /www/htdocs/w017d4f9/sonicscrewdriver.mbr.mobi/mapjump/logs/geoip-update.log 2>&1
-
-# Alternativ mit Shell-Wrapper (empfohlen, loggt Start/Ende sauber):
-# 23 3 1 * * /bin/bash /www/htdocs/w017d4f9/sonicscrewdriver.mbr.mobi/mapjump/bin/update-geoip.sh
+23  3  1  *  *  php83 /www/htdocs/w017d4f9/sonicscrewdriver.mbr.mobi/mapjump/bin/update-geoip.php >> /www/htdocs/w017d4f9/sonicscrewdriver.mbr.mobi/mapjump/logs/geoip-update.log 2>&1

@@ -10,4 +10,4 @@
 # │  │  │    ┌─ Monat (jeder)
 # │  │  │    │  ┌─ Wochentag (jeder)
 # │  │  │    │  │
-47  2  1,15  *  *  /usr/bin/php /www/htdocs/w017d4f9/sonicscrewdriver.mbr.mobi/mapjump/bin/cleanup-cache.php >> /www/htdocs/w017d4f9/sonicscrewdriver.mbr.mobi/mapjump/logs/cache-cleanup.log 2>&1
+47  2  1,15  *  *  php83 /www/htdocs/w017d4f9/sonicscrewdriver.mbr.mobi/mapjump/bin/cleanup-cache.php >> /www/htdocs/w017d4f9/sonicscrewdriver.mbr.mobi/mapjump/logs/cache-cleanup.log 2>&1

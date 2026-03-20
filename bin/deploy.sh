@@ -8,17 +8,23 @@
 # Beim ersten Mal:
 #   git clone <repo-url> /www/htdocs/w017d4f9/sonicscrewdriver.mbr.mobi/mapjump/
 #   cd /www/htdocs/w017d4f9/sonicscrewdriver.mbr.mobi/mapjump/
+#   wget https://getcomposer.org/composer.phar
 #   cp config/.env.example config/.env
 #   nano config/.env        # Produktionswerte eintragen
 #   bash bin/deploy.sh
+#
+# KAS-Besonderheiten:
+#   - PHP wird als "php83" aufgerufen (kein globales "php")
+#   - Composer muss lokal als composer.phar im Projektverzeichnis liegen
+#   - Aufruf: php83 composer.phar ...
 # ============================================================
 
 set -e  # Abbruch bei Fehler
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BASE_DIR="$(dirname "$SCRIPT_DIR")"
-PHP_BIN="${PHP_BIN:-php}"
-COMPOSER="${COMPOSER:-$BASE_DIR/composer.phar}"
+PHP_BIN="${PHP_BIN:-php83}"
+COMPOSER="$BASE_DIR/composer.phar"
 
 cd "$BASE_DIR"
 
@@ -29,29 +35,35 @@ echo "===================================================="
 
 # 1. Neuesten Stand holen
 echo ""
-echo "[1/6] Git Pull..."
+echo "[1/7] Git Pull..."
 git pull --ff-only
 
-# 2. Composer-Dependencies aktualisieren (ohne Dev-Pakete)
+# 2. composer.phar prüfen
 echo ""
-echo "[2/6] Composer install (--no-dev)..."
-if command -v composer &>/dev/null; then
-    composer install --no-dev --optimize-autoloader --no-interaction
-elif [ -f "$COMPOSER" ]; then
-    "$PHP_BIN" "$COMPOSER" install --no-dev --optimize-autoloader --no-interaction
+echo "[2/7] Composer prüfen..."
+if [ ! -f "$COMPOSER" ]; then
+    echo "  composer.phar nicht gefunden – lade herunter..."
+    wget -q https://getcomposer.org/composer.phar -O "$COMPOSER"
+    chmod 644 "$COMPOSER"
+    echo "  composer.phar heruntergeladen ✓"
 else
-    echo "WARNUNG: Composer nicht gefunden – Dependencies nicht aktualisiert."
+    echo "  composer.phar vorhanden ✓"
 fi
 
-# 3. Verzeichnisse anlegen + Rechte setzen
+# 3. Composer-Dependencies installieren (ohne Dev-Pakete)
 echo ""
-echo "[3/6] Verzeichnisse prüfen..."
+echo "[3/7] Composer install (--no-dev)..."
+"$PHP_BIN" "$COMPOSER" install --no-dev --optimize-autoloader --no-interaction
+
+# 4. Verzeichnisse anlegen + Rechte setzen
+echo ""
+echo "[4/7] Verzeichnisse prüfen..."
 mkdir -p cache/ logs/ data/
 chmod 755 cache/ logs/ data/
 
-# 4. .env prüfen
+# 5. .env prüfen
 echo ""
-echo "[4/6] Konfiguration prüfen..."
+echo "[5/7] Konfiguration prüfen..."
 if [ ! -f "config/.env" ]; then
     echo "FEHLER: config/.env fehlt!"
     echo "  cp config/.env.example config/.env && nano config/.env"
@@ -59,9 +71,9 @@ if [ ! -f "config/.env" ]; then
 fi
 echo "  config/.env vorhanden ✓"
 
-# 5. GeoIP-Datenbank initialisieren (nur wenn noch nicht vorhanden)
+# 6. GeoIP-Datenbank initialisieren (nur wenn noch nicht vorhanden)
 echo ""
-echo "[5/6] GeoIP-Datenbank..."
+echo "[6/7] GeoIP-Datenbank..."
 if [ ! -f "data/GeoLite2-Country.mmdb" ]; then
     echo "  Erstmaliger Download..."
     "$PHP_BIN" bin/update-geoip.php
@@ -69,9 +81,9 @@ else
     echo "  GeoLite2-Country.mmdb vorhanden ✓"
 fi
 
-# 6. Schreibrechte für Cache + Logs
+# 7. Schreibrechte für Cache + Logs
 echo ""
-echo "[6/6] Dateisystem-Rechte..."
+echo "[7/7] Dateisystem-Rechte..."
 chmod -R 775 cache/ logs/ data/
 find src/ -name "*.php" -exec chmod 644 {} \;
 find bin/ -name "*.sh" -exec chmod 755 {} \;
@@ -83,6 +95,6 @@ echo ""
 echo "  Nächste Schritte (einmalig):"
 echo "  → Cron-Jobs einrichten:"
 echo "    crontab -e"
-echo "    → Inhalt aus etc/cron.d/ einfügen (Pfade anpassen)"
+echo "    → Inhalt aus etc/cron.d/ einfügen"
 echo "===================================================="
 echo ""
