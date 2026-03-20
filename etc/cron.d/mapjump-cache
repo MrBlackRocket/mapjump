@@ -1,8 +1,8 @@
 # MapJump – Nominatim-Cache aufräumen
 #
-# Einrichtung auf dem Server (als Web-User, z.B. www-data oder xineo):
+# Einrichtung auf dem Server (KAS Shared Hosting):
 #   crontab -e
-#   → Diese Zeile einfügen (Pfad anpassen!):
+#   → Diese Zeile einfügen:
 #
 # ┌─ Minute (47)
 # │  ┌─ Stunde (02 Uhr nachts)
@@ -10,4 +10,4 @@
 # │  │  │    ┌─ Monat (jeder)
 # │  │  │    │  ┌─ Wochentag (jeder)
 # │  │  │    │  │
-47  2  1,15  *  *  /usr/bin/php /var/www/mapjump2/bin/cleanup-cache.php >> /var/www/mapjump2/logs/cache-cleanup.log 2>&1
+47  2  1,15  *  *  /usr/bin/php /www/htdocs/w017d4f9/sonicscrewdriver.mbr.mobi/mapjump/bin/cleanup-cache.php >> /www/htdocs/w017d4f9/sonicscrewdriver.mbr.mobi/mapjump/logs/cache-cleanup.log 2>&1

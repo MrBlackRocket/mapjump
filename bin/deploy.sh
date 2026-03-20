@@ -6,8 +6,8 @@
 #   bash bin/deploy.sh
 #
 # Beim ersten Mal:
-#   git clone <repo-url> /www/htdocs/w017d4f9/mapjump/
-#   cd /www/htdocs/w017d4f9/mapjump/
+#   git clone <repo-url> /www/htdocs/w017d4f9/sonicscrewdriver.mbr.mobi/mapjump/
+#   cd /www/htdocs/w017d4f9/sonicscrewdriver.mbr.mobi/mapjump/
 #   cp config/.env.example config/.env
 #   nano config/.env        # Produktionswerte eintragen
 #   bash bin/deploy.sh
