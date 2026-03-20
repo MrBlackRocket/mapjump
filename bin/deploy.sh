@@ -81,12 +81,17 @@ else
     echo "  GeoLite2-Country.mmdb vorhanden ✓"
 fi
 
-# 7. Schreibrechte für Cache + Logs
+# 7. Schreibrechte + Verzeichnisschutz
 echo ""
 echo "[7/7] Dateisystem-Rechte..."
 chmod -R 775 cache/ logs/ data/
 find src/ -name "*.php" -exec chmod 644 {} \;
 find bin/ -name "*.sh" -exec chmod 755 {} \;
+
+# .htaccess-Schutz für gitignorierte Verzeichnisse
+echo "Require all denied" > cache/.htaccess
+echo "Require all denied" > logs/.htaccess
+echo "Require all denied" > vendor/.htaccess
 
 echo ""
 echo "===================================================="

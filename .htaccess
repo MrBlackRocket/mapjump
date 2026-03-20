@@ -2,31 +2,15 @@
 # MapJump – Apache-Konfiguration
 # ============================================================
 
-# --- PHP-Einstellungen ---
-# In Produktion auf "off" setzen!
-php_flag  display_errors    off
-php_flag  log_errors        on
-php_value error_reporting   E_ALL
-php_value error_log         logs/php_errors.log
-
-# --- Verzeichnis-Schutz: sensible Pfade sperren ---
-<IfModule mod_authz_core.c>
-    <DirectoryMatch "^.*/(vendor|config|cache|logs|data|bin|etc)(/.*)?>">
-        Require all denied
-    </DirectoryMatch>
-</IfModule>
-
-# Punktdateien (.env, .git, .htaccess selbst von außen etc.)
+# --- Verzeichnis-Schutz: sensible Dateien sperren ---
 <FilesMatch "^\.">
     Require all denied
 </FilesMatch>
 
-# composer.json, composer.lock, composer.phar nie ausliefern
 <FilesMatch "^composer\.(json|lock|phar)$">
     Require all denied
 </FilesMatch>
 
-# psalm.xml, phpcs-Konfiguration nicht ausliefern
 <FilesMatch "\.(xml|dist|neon|cache)$">
     Require all denied
 </FilesMatch>
@@ -40,7 +24,6 @@ php_value error_log         logs/php_errors.log
     Header always set Permissions-Policy        "geolocation=(), camera=(), microphone=()"
 
     # Content Security Policy
-    # CDN-Quellen für Bootstrap, Bootstrap Icons, Leaflet erlauben
     Header always set Content-Security-Policy "\
 default-src 'self'; \
 script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com https://analytics.mrblackrocket.com; \
@@ -51,7 +34,7 @@ connect-src 'self' https://nominatim.openstreetmap.org https://analytics.mrblack
 frame-ancestors 'none';"
 </IfModule>
 
-# --- URL-Rewriting (optional, für saubere Fehlermeldungen) ---
+# --- URL-Rewriting ---
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
@@ -69,8 +52,8 @@ AddDefaultCharset UTF-8
 # --- Caching für statische Assets ---
 <IfModule mod_expires.c>
     ExpiresActive On
-    ExpiresByType text/css             "access plus 1 month"
+    ExpiresByType text/css               "access plus 1 month"
     ExpiresByType application/javascript "access plus 1 month"
-    ExpiresByType image/png            "access plus 1 month"
-    ExpiresByType image/svg+xml        "access plus 1 month"
+    ExpiresByType image/png              "access plus 1 month"
+    ExpiresByType image/svg+xml          "access plus 1 month"
 </IfModule>
