@@ -47,29 +47,53 @@ class GeoParam
     /** @psalm-api */
     public static function fromGeoHackParams(string $param): self
     {
-        $parts = preg_split('/[_\s]+/', $param);
-        $latParts = [];
-        $lonParts = [];
-        $latFound = false;
-        $lonFound = false;
+        /** @var string[] $parts */
+        $parts    = preg_split('/[_\s]+/', trim($param)) ?: [];
+        $latDecimal = null;
+        $lonDecimal = null;
 
         foreach ($parts as $i => $part) {
-            if (preg_match('/^[NS]$/i', $part) && !$latFound) {
-                $latParts = array_slice($parts, $i - 3, 4);
-                $latFound = true;
+            if (preg_match('/^[NS]$/i', $part) && $latDecimal === null) {
+                $latDecimal = self::dirPartsToDecimal($parts, $i);
             }
-            if (preg_match('/^[EW]$/i', $part) && !$lonFound) {
-                $lonParts = array_slice($parts, $i - 3, 4);
-                $lonFound = true;
+            if (preg_match('/^[EW]$/i', $part) && $lonDecimal === null) {
+                $lonDecimal = self::dirPartsToDecimal($parts, $i);
             }
         }
 
-        if (!$latFound || !$lonFound) {
+        if ($latDecimal === null || $lonDecimal === null) {
             throw new \InvalidArgumentException("Unvollständige oder nicht erkannte params: $param");
         }
 
-        $latStr = implode('_', $latParts);
-        $lonStr = implode('_', $lonParts);
-        return new self($latStr, $lonStr);
+        return new self((string)$latDecimal, (string)$lonDecimal);
+    }
+
+    /**
+     * Liest rückwärts ab dem Richtungsbuchstaben ($parts[$dirIndex])
+     * alle vorangehenden Zahlen (Grad / Minuten / Sekunden) und
+     * wandelt sie in einen Dezimalwert um.
+     * Unterstützt D-, DM- und DMS-Format.
+     *
+     * @param string[] $parts
+     */
+    private static function dirPartsToDecimal(array $parts, int $dirIndex): float
+    {
+        $nums = [];
+        for ($j = $dirIndex - 1; $j >= 0; $j--) {
+            if (!is_numeric($parts[$j])) {
+                break;
+            }
+            array_unshift($nums, (float)$parts[$j]);
+        }
+
+        $decimal  = $nums[0] ?? 0.0;
+        $decimal += ($nums[1] ?? 0.0) / 60;
+        $decimal += ($nums[2] ?? 0.0) / 3600;
+
+        if (preg_match('/^[SW]$/i', $parts[$dirIndex])) {
+            $decimal *= -1;
+        }
+
+        return $decimal;
     }
 }
