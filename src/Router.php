@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Geo;
 
+use Geo\Auth\TokenAuth;
 use Geo\Pages\FormPage;
+use Geo\Pages\GeocodePage;
+use Geo\Pages\GeocodeLoginPage;
 use Geo\Pages\IndexPage;
 use Geo\Pages\DetailPage;
 use Geo\Pages\StaticPage;
@@ -23,6 +26,22 @@ class Router
         $output  = isset($_GET['output'])  && is_string($_GET['output'])  ? strtolower(trim($_GET['output']))              : null;
 
         // Spezialseiten
+        if ($view === 'geocode') {
+            GeocodePage::render();
+            return;
+        }
+
+        if ($view === 'geocode-login') {
+            GeocodeLoginPage::render();
+            return;
+        }
+
+        if ($view === 'geocode-logout') {
+            TokenAuth::logout();
+            header('Location: ?view=geocode-login');
+            exit;
+        }
+
         if ($view !== null) {
             StaticPage::render($view);
             return;

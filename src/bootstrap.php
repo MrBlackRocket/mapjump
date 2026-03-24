@@ -5,6 +5,10 @@ declare(strict_types=1);
 // Autoloader laden (von ../vendor ausgehend, da wir in src/ liegen)
 require_once __DIR__ . '/../vendor/autoload.php';
 
+// Session früh starten (vor jeglicher Ausgabe)
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // .env laden
 use Geo\EnvLoader;
