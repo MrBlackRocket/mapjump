@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Geo;
+namespace Geo\Map;
 
-use Geo\GeoFormatter;
-use Geo\GeoReverse;
-use Geo\MapSource;
+use Geo\Geo\GeoFormatter;
+use Geo\Geo\GeoParam;
+use Geo\Nominatim\ReverseGeocoder;
+use Geo\Map\MapSource;
 use Geo\Logger;
 
 class Exporter
@@ -18,7 +19,7 @@ class Exporter
             $logger->info('Export request', ['output' => $output, 'lat' => $lat, 'lon' => $lon]);
         }
 
-        $address = GeoReverse::getAddress($lat, $lon);
+        $address = ReverseGeocoder::getAddress($lat, $lon);
         $title = $title ?? GeoFormatter::toDMS($lat, true) . ' / ' . GeoFormatter::toDMS($lon, false);
         $escapedTitle = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
         $escapedAddress = str_replace(["\r", "\n"], '', $address ?? '');

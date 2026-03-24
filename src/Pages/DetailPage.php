@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Geo\Pages;
 
-use Geo\GeoParam;
-use Geo\GeoReverse;
-use Geo\GeoFormatter;
-use Geo\GeoHelper;
-use Geo\MapSource;
-use Geo\Exporter;
+use Geo\Geo\GeoParam;
+use Geo\Geo\GeoFormatter;
+use Geo\Geo\GeoHelper;
+use Geo\Map\MapSource;
+use Geo\Map\Exporter;
+use Geo\Nominatim\ReverseGeocoder;
 use Geo\Layout;
 
 class DetailPage
@@ -19,7 +19,7 @@ class DetailPage
         $lat = $geo->lat;
         $lon = $geo->lon;
 
-        $address = GeoReverse::getAddress($lat, $lon);
+        $address = ReverseGeocoder::getAddress($lat, $lon);
         $dms = GeoHelper::formatDMS($lat, $lon);
         $utm = GeoFormatter::toUTM($lat, $lon);
         $geoUri = sprintf("geo:%f,%f", $lat, $lon);

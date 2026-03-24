@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Geo;
+namespace Geo\GeoIP;
 
 use MaxMind\Db\Reader;
 use Geo\Logger;
@@ -14,7 +14,7 @@ class GeoIP
 
     public static function getCountryCode(string $ip): ?string
     {
-        $dbPath = EnvLoader::get('GEOIP_DB', __DIR__ . '/../data/GeoLite2-Country.mmdb');
+        $dbPath = EnvLoader::get('GEOIP_DB', __DIR__ . '/../../data/GeoLite2-Country.mmdb');
 
         if (!self::$reader) {
             if (!file_exists($dbPath)) {

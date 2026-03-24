@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Geo\Pages;
 
-use Geo\GeoFormatter;
-use Geo\GeoReverse;
-use Geo\MapSource;
+use Geo\Geo\GeoFormatter;
+use Geo\Geo\GeoParam;
+use Geo\Map\MapSource;
+use Geo\Nominatim\ReverseGeocoder;
 use Geo\Layout;
-use Geo\GeoParam;
 
 class IndexPage
 {
@@ -20,7 +20,7 @@ class IndexPage
         $lonDMS = GeoFormatter::toDMS($lon, false);
         $utm = GeoFormatter::toUTM($lat, $lon);
         $geoUri = "geo:$lat,$lon";
-        $address = GeoReverse::getAddress($lat, $lon);
+        $address = ReverseGeocoder::getAddress($lat, $lon);
         $safeAddress = htmlspecialchars($address ?? '');
         $groups = MapSource::renderLinks($lat, $lon);
 
