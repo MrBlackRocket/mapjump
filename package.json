@@ -2,11 +2,18 @@
   "name": "mapjump",
   "private": true,
   "scripts": {
-    "build": "tailwindcss -c tailwind.config.js -i src/css/tailwind.css -o public/app.css --minify",
-    "watch": "tailwindcss -c tailwind.config.js -i src/css/tailwind.css -o public/app.css --watch"
+    "build:assets": "node bin/copy-assets.js",
+    "build": "node bin/copy-assets.js && tailwindcss -c tailwind.config.js -i src/css/tailwind.css -o public/css/app.css --minify",
+    "watch": "tailwindcss -c tailwind.config.js -i src/css/tailwind.css -o public/css/app.css --watch"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.11",
     "tailwindcss": "^3.4.19"
+  },
+  "dependencies": {
+    "@alpinejs/csp": "^3.15.8",
+    "alpinejs": "^3.15.8",
+    "leaflet": "^1.9.4",
+    "lucide": "^1.6.0"
   }
 }
