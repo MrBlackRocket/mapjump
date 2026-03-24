@@ -6,7 +6,7 @@ namespace Geo;
 
 use Geo\Layout;
 use Geo\Logger;
-use Geo\GeoIP;
+use Geo\GeoIP\GeoIP;
 use Jaybizzle\CrawlerDetect\CrawlerDetect;
 
 class Security

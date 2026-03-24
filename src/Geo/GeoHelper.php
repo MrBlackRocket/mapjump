@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Geo;
+namespace Geo\Geo;
 
-use Geo\GeoFormatter;
+use Geo\Geo\GeoFormatter;
 
 class GeoHelper
 {

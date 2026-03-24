@@ -2,13 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Geo;
+namespace Geo\Nominatim;
 
-class GeoReverse
+use Geo\EnvLoader;
+use Geo\Logger;
+
+class ReverseGeocoder
 {
     private static function cacheDir(): string
     {
-        return rtrim(EnvLoader::get('CACHE_DIR', __DIR__ . '/../cache/'), '/') . '/';
+        return rtrim(EnvLoader::get('CACHE_DIR', __DIR__ . '/../../cache/'), '/') . '/';
     }
 
     public static function getAddress(float $lat, float $lon, bool $withDebug = false): ?string
@@ -34,7 +37,7 @@ class GeoReverse
             $address = $data['address'] ?? null;
             $isHit = true;
 
-            Logger::get()?->info("GeoReverse Cache HIT", ['lat' => $lat, 'lon' => $lon, 'file' => $cacheFile]);
+            Logger::get()?->info("ReverseGeocoder Cache HIT", ['lat' => $lat, 'lon' => $lon, 'file' => $cacheFile]);
         } else {
             $url = "https://nominatim.openstreetmap.org/reverse?format=json&lat=$lat&lon=$lon&zoom=18&addressdetails=1";
             $options = [
@@ -54,15 +57,15 @@ class GeoReverse
 
                 if ($address !== null) {
                     file_put_contents($cacheFile, json_encode(['address' => $address]));
-                    Logger::get()?->info("GeoReverse Cache MISS → gespeichert", ['lat' => $lat, 'lon' => $lon, 'file' => $cacheFile]);
+                    Logger::get()?->info("ReverseGeocoder Cache MISS → gespeichert", ['lat' => $lat, 'lon' => $lon, 'file' => $cacheFile]);
                 }
             } else {
-                Logger::get()?->warning("GeoReverse: keine Antwort von Nominatim", ['lat' => $lat, 'lon' => $lon]);
+                Logger::get()?->warning("ReverseGeocoder: keine Antwort von Nominatim", ['lat' => $lat, 'lon' => $lon]);
             }
         }
 
         if ($withDebug) {
-            Logger::get()?->debug("GeoReverse Debug", [
+            Logger::get()?->debug("ReverseGeocoder Debug", [
                 'lat' => $lat,
                 'lon' => $lon,
                 'address' => $address,

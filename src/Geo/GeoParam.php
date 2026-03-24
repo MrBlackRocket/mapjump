@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Geo;
+namespace Geo\Geo;
 
 class GeoParam
 {

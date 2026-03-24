@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Geo;
 
 use Geo\Auth\TokenAuth;
+use Geo\Geo\GeoParam;
+use Geo\Map\Exporter;
 use Geo\Pages\FormPage;
 use Geo\Pages\GeocodePage;
 use Geo\Pages\GeocodeLoginPage;

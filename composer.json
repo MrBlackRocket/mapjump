@@ -5,6 +5,11 @@
   "license": "GPLv3",
   "autoload": {
     "psr-4": {
+      "Geo\\Geo\\": "src/Geo/",
+      "Geo\\GeoIP\\": "src/GeoIP/",
+      "Geo\\Map\\": "src/Map/",
+      "Geo\\Nominatim\\": "src/Nominatim/",
+      "Geo\\Auth\\": "src/Auth/",
       "Geo\\Pages\\": "src/Pages/",
       "Geo\\": "src/"
     },
