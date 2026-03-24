@@ -31,58 +31,65 @@ class DetailPage
 
         $pageTitle = ($title !== null && $title !== '') ? "MapJump – {$title}" : "MapJump – {$label}";
 
-        $markerSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#0d6efd"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3" fill="white"/></svg>';
+        $markerSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#2563eb"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3" fill="white"/></svg>';
 
         $body = <<<HTML
-<article>
-  <header style="display:flex; justify-content:space-between; align-items:center;">
-    <h5 style="margin:0"><i data-lucide="map-pin"></i> Koordinaten</h5>
+<div class="bg-white rounded-lg border border-gray-200 shadow-sm p-5 mb-4">
+  <div class="flex justify-between items-center mb-3">
+    <h5 class="text-base font-semibold flex items-center gap-1.5">
+      <i data-lucide="map-pin"></i> Koordinaten
+    </h5>
 HTML;
 
         if ($link !== null) {
             $safeLink = htmlspecialchars($link);
             $body .= <<<HTML
-    <a href="{$safeLink}" class="btn-group" target="_blank" role="button">
+    <a href="{$safeLink}" target="_blank"
+       class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none">
       <i data-lucide="map"></i> {$label} öffnen
     </a>
 HTML;
         }
 
         $body .= <<<HTML
-  </header>
-  <p>
+  </div>
+  <p class="text-sm leading-6">
     <strong>Dezimal:</strong> {$lat}, {$lon}<br>
     <strong>DMS:</strong> {$dms}<br>
     <strong>UTM:</strong> {$utm}<br>
-    <strong>Geo URI:</strong> <a rel="nofollow" href="{$geoUri}">{$geoUri}</a>
+    <strong>Geo URI:</strong> <a href="{$geoUri}" rel="nofollow" class="text-blue-600 hover:underline">{$geoUri}</a>
   </p>
-  <div x-data="{ show: false }" class="btn-group">
-    <a href="?lat={$lat}&lon={$lon}&output=vcard" role="button" class="outline secondary">
+  <div x-data="{ show: false }" class="flex flex-wrap gap-2 mt-3">
+    <a href="?lat={$lat}&lon={$lon}&output=vcard"
+       class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm border border-gray-300 rounded hover:bg-gray-50">
       <i data-lucide="contact"></i> vCard herunterladen
     </a>
-    <button class="outline secondary" @click="show = !show">
+    <button class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm border border-gray-300 rounded hover:bg-gray-50"
+            @click="show = !show">
       <i data-lucide="eye"></i> vCard anzeigen
     </button>
-    <div x-show="show" x-cloak x-transition style="width:100%; margin-top:0.5rem">
-      <pre>{$vcfEncoded}</pre>
+    <div x-show="show" x-cloak x-transition class="w-full mt-2">
+      <pre class="text-xs bg-gray-50 border border-gray-200 rounded p-3 overflow-auto">{$vcfEncoded}</pre>
     </div>
   </div>
-</article>
+</div>
 HTML;
 
         if ($address !== null && $address !== '') {
             $safeAddress = htmlspecialchars($address);
             $body .= <<<HTML
-<article>
-  <header><h5 style="margin:0"><i data-lucide="map-pin"></i> Adresse</h5></header>
-  <p>{$safeAddress}</p>
-</article>
+<div class="bg-white rounded-lg border border-gray-200 shadow-sm p-5 mb-4">
+  <h5 class="text-base font-semibold flex items-center gap-1.5 mb-2">
+    <i data-lucide="map-pin"></i> Adresse
+  </h5>
+  <p class="text-sm">{$safeAddress}</p>
+</div>
 HTML;
         }
 
         if ($link !== null) {
             $body .= <<<HTML
-<div id="map" class="map-container"></div>
+<div id="map" class="h-72 rounded overflow-hidden mb-6 border border-gray-200"></div>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 <script>

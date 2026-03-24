@@ -16,6 +16,9 @@
 
 # Composer
 composer.phar
+
+# Node / Tailwind
+node_modules/
 .php-cs-fixer.cache
 .psalm/
 
