@@ -75,6 +75,28 @@ MATOMO;
         show: false,
         toggle() { this.show = !this.show; }
       }));
+      Alpine.data('coordForm', () => ({
+        dLat: '', mLat: '', sLat: '', dirLat: 'N',
+        dLon: '', mLon: '', sLon: '', dirLon: 'E',
+        decLat: '', decLon: '',
+        error: '',
+        toggleLatDir() { this.dirLat = this.dirLat === 'N' ? 'S' : 'N'; },
+        toggleLonDir() { this.dirLon = this.dirLon === 'E' ? 'W' : 'E'; },
+        submit() {
+          this.error = '';
+          if (this.dLat !== '' || this.mLat !== '' || this.sLat !== '') {
+            const p = [
+              this.dLat || '0', this.mLat || '0', this.sLat || '0', this.dirLat,
+              this.dLon || '0', this.mLon || '0', this.sLon || '0', this.dirLon
+            ].join('_');
+            window.location.href = '?' + new URLSearchParams({ params: p }).toString();
+          } else if (this.decLat !== '' && this.decLon !== '') {
+            window.location.href = '?' + new URLSearchParams({ lat: this.decLat, lon: this.decLon }).toString();
+          } else {
+            this.error = 'Bitte Koordinaten eingeben (DMS oder Dezimal).';
+          }
+        }
+      }));
     });
   </script>
   <script src="public/js/lucide.min.js"></script>
