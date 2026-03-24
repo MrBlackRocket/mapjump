@@ -43,7 +43,8 @@ MATOMO;
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{$safeTitle}</title>
-  <link href="public/app.css" rel="stylesheet">
+  <link href="public/css/app.css" rel="stylesheet">
+  <link href="public/css/leaflet.css" rel="stylesheet">
   <style>[x-cloak]{display:none!important}[data-lucide]{display:inline-block;vertical-align:middle;width:1em;height:1em}</style>
 {$matomoHtml}
 </head>
@@ -63,8 +64,21 @@ MATOMO;
       Inspiriert von <a href="https://geohack.toolforge.org/" target="_blank" rel="nofollow" class="hover:underline">GeoHack</a> von Magnus Manske
     </p>
   </footer>
-  <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script>
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('dropdown', () => ({
+        open: false,
+        toggle() { this.open = !this.open; },
+        close() { this.open = false; }
+      }));
+      Alpine.data('collapse', () => ({
+        show: false,
+        toggle() { this.show = !this.show; }
+      }));
+    });
+  </script>
+  <script src="public/js/lucide.min.js"></script>
+  <script defer src="public/js/alpine.min.js"></script>
   <script>document.addEventListener('DOMContentLoaded', () => lucide.createIcons());</script>
 </body>
 </html>

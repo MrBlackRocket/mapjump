@@ -59,13 +59,13 @@ HTML;
     <strong>UTM:</strong> {$utm}<br>
     <strong>Geo URI:</strong> <a href="{$geoUri}" rel="nofollow" class="text-blue-600 hover:underline">{$geoUri}</a>
   </p>
-  <div x-data="{ show: false }" class="flex flex-wrap gap-2 mt-3">
+  <div x-data="collapse" class="flex flex-wrap gap-2 mt-3">
     <a href="?lat={$lat}&lon={$lon}&output=vcard"
        class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm border border-gray-300 rounded hover:bg-gray-50">
       <i data-lucide="contact"></i> vCard herunterladen
     </a>
     <button class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm border border-gray-300 rounded hover:bg-gray-50"
-            @click="show = !show">
+            @click="toggle()">
       <i data-lucide="eye"></i> vCard anzeigen
     </button>
     <div x-show="show" x-cloak x-transition class="w-full mt-2">
@@ -90,8 +90,7 @@ HTML;
         if ($link !== null) {
             $body .= <<<HTML
 <div id="map" class="h-72 rounded overflow-hidden mb-6 border border-gray-200"></div>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script src="public/js/leaflet.min.js"></script>
 <script>
   const markerIcon = L.divIcon({
     html: '{$markerSvg}',

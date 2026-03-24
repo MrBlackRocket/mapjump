@@ -36,9 +36,9 @@ class IndexPage
     <h5 class="text-base font-semibold flex items-center gap-1.5">
       <i data-lucide="map-pin"></i> Koordinaten
     </h5>
-    <div class="relative inline-block" x-data="{ open: false }">
+    <div class="relative inline-block" x-data="dropdown">
       <button class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm border border-gray-300 rounded hover:bg-gray-50 focus:outline-none"
-              @click="open = !open" @click.outside="open = false">
+              @click="toggle()" @click.outside="close()">
         <i data-lucide="download"></i> Exportieren
         <i data-lucide="chevron-down"></i>
       </button>
@@ -71,9 +71,9 @@ HTML;
 
         if ($address !== null && $address !== '') {
             $body .= <<<HTML
-  <div x-data="{ show: false }" class="mt-3">
+  <div x-data="collapse" class="mt-3">
     <button class="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm border border-gray-300 rounded hover:bg-gray-50"
-            @click="show = !show">
+            @click="toggle()">
       <i data-lucide="map-pin"></i> Adresse anzeigen
     </button>
     <div x-show="show" x-cloak x-transition
@@ -106,8 +106,7 @@ HTML;
 
         $body .= <<<HTML
 </table>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script src="public/js/leaflet.min.js"></script>
 <script>
   const markerIcon = L.divIcon({
     html: '{$markerSvg}',
