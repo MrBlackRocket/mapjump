@@ -28,69 +28,55 @@ class IndexPage
             ? "MapJump – " . $title
             : "MapJump – ($latDMS / $lonDMS)";
 
+        $markerSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#0d6efd"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3" fill="white"/></svg>';
+
         $body = <<<HTML
-<div class="card mb-4">
-  <div class="card-body">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h5 class="card-title mb-0"><i class="bi bi-geo-alt me-1"></i> Koordinaten</h5>
-      <div class="dropdown">
-        <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <i class="bi bi-download me-1"></i> Exportieren
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end">
-          <li><h6 class="dropdown-header"><i class="bi bi-box-arrow-up me-1"></i> Export als …</h6></li>
-          <li>
-            <a class="dropdown-item" href="?lat={$lat}&lon={$lon}&output=geojson">
-              <i class="bi bi-braces me-2 text-primary"></i> GeoJSON
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="?lat={$lat}&lon={$lon}&output=csv">
-              <i class="bi bi-filetype-csv me-2 text-success"></i> CSV
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item" href="?lat={$lat}&lon={$lon}&output=kml">
-              <i class="bi bi-globe me-2 text-danger"></i> KML
-            </a>
-          </li>
-          <li><hr class="dropdown-divider"></li>
-          <li>
-            <a class="dropdown-item" href="?lat={$lat}&lon={$lon}&output=vcard">
-              <i class="bi bi-person-vcard me-2 text-warning"></i> vCard (.vcf)
-            </a>
-          </li>
-        </ul>
-      </div>
+<article>
+  <header style="display:flex; justify-content:space-between; align-items:center;">
+    <h5 style="margin:0"><i data-lucide="map-pin"></i> Koordinaten</h5>
+    <div class="dropdown-wrap" x-data="{ open: false }">
+      <button class="outline secondary" style="margin:0" @click="open = !open" @click.outside="open = false">
+        <i data-lucide="download"></i> Exportieren
+      </button>
+      <ul class="dropdown-menu" x-show="open" x-cloak x-transition>
+        <li><span class="dropdown-header"><i data-lucide="upload"></i> Export als …</span></li>
+        <li><a href="?lat={$lat}&lon={$lon}&output=geojson"><i data-lucide="braces"></i> GeoJSON</a></li>
+        <li><a href="?lat={$lat}&lon={$lon}&output=csv"><i data-lucide="file-spreadsheet"></i> CSV</a></li>
+        <li><a href="?lat={$lat}&lon={$lon}&output=kml"><i data-lucide="globe"></i> KML</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a href="?lat={$lat}&lon={$lon}&output=vcard"><i data-lucide="contact"></i> vCard (.vcf)</a></li>
+      </ul>
     </div>
-    <span class="card-text">
-      <strong>Dezimal:</strong> {$lat}, {$lon}<br>
-      <strong>DMS:</strong> {$latDMS} / {$lonDMS}<br>
-      <strong>UTM:</strong> {$utm}<br>
-      <strong>Geo URI:</strong> <a rel="nofollow" href="{$geoUri}">{$geoUri}</a><br>
+  </header>
+  <p>
+    <strong>Dezimal:</strong> {$lat}, {$lon}<br>
+    <strong>DMS:</strong> {$latDMS} / {$lonDMS}<br>
+    <strong>UTM:</strong> {$utm}<br>
+    <strong>Geo URI:</strong> <a rel="nofollow" href="{$geoUri}">{$geoUri}</a>
+  </p>
 HTML;
 
         if ($address !== null && $address !== '') {
             $body .= <<<HTML
-      <button class="btn btn-outline-secondary btn-sm mt-2" data-bs-toggle="collapse" data-bs-target="#addressBox" aria-expanded="false" aria-controls="addressBox">
-        <i class="bi bi-geo-alt me-1"></i> Adresse anzeigen
-      </button>
-      <div id="addressBox" class="collapse mt-2">
-        <div class="alert alert-light fst-italic">{$safeAddress}</div>
-      </div>
+  <div x-data="{ show: false }">
+    <button class="outline secondary" style="margin-bottom:0.5rem" @click="show = !show">
+      <i data-lucide="map-pin"></i> Adresse anzeigen
+    </button>
+    <div x-show="show" x-cloak x-transition>
+      <p class="alert alert-light fst-italic">{$safeAddress}</p>
+    </div>
+  </div>
 HTML;
         }
 
         $body .= <<<HTML
-    </span>
-  </div>
-</div>
+</article>
 
-<div id="map" class="map-container border rounded mb-4"></div>
+<div id="map" class="map-container"></div>
 
-<h2 class="mt-4">Kartenanbieter</h2>
-<input id="filter" class="form-control mb-3" placeholder="Suche Anbieter..." onkeyup="filterLinks()">
-<table class="table table-bordered table-striped table-hover align-middle" id="linktable">
+<h2>Kartenanbieter</h2>
+<input id="filter" placeholder="Suche Anbieter..." onkeyup="filterLinks()" style="margin-bottom:1rem">
+<table id="linktable">
 HTML;
 
         foreach ($groups as $group => $links) {
@@ -98,43 +84,44 @@ HTML;
             foreach ($links as $name => $url) {
                 $safeName = htmlspecialchars($name);
                 $safeUrl = htmlspecialchars($url);
-                $body .= "<tr><td>{$safeName}</td><td><a href=\"{$safeUrl}\" target=\"_blank\"><i class=\"bi bi-box-arrow-up-right me-1\"></i>Link</a></td></tr>";
+                $body .= "<tr><td>{$safeName}</td><td><a href=\"{$safeUrl}\" target=\"_blank\"><i data-lucide=\"external-link\"></i> Link</a></td></tr>";
             }
         }
 
         $body .= <<<HTML
-					</table>
-					<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
-					<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-					<script>
-					  const markerIcon = L.divIcon({ html: '<i class="bi bi-geo-alt-fill" style="font-size:1.8rem;color:#0d6efd;line-height:1"></i>', className: '', iconAnchor: [9, 30], popupAnchor: [0, -30] });
-					  const map = L.map('map').setView([{$lat}, {$lon}], 13);
-					  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-						attribution: '&copy; OpenStreetMap contributors'
-					  }).addTo(map);
-					  L.marker([{$lat}, {$lon}], {icon: markerIcon}).addTo(map)
-						.bindPopup('Koordinaten<br>{$lat}, {$lon}').openPopup();
+</table>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script>
+  const markerIcon = L.divIcon({
+    html: '{$markerSvg}',
+    className: '',
+    iconAnchor: [14, 28],
+    popupAnchor: [0, -28]
+  });
+  const map = L.map('map').setView([{$lat}, {$lon}], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+  L.marker([{$lat}, {$lon}], {icon: markerIcon}).addTo(map)
+    .bindPopup('Koordinaten<br>{$lat}, {$lon}').openPopup();
 
-					  function filterLinks() {
-						const input = document.getElementById("filter").value.toLowerCase();
-						const rows = document.querySelectorAll("#linktable tr");
-						let lastGroup = null;
-
-						rows.forEach(row => {
-						  if (row.classList.contains("group")) {
-							row.style.display = "none";
-							lastGroup = row;
-						  } else {
-							const match = row.cells[0].textContent.toLowerCase().includes(input);
-							row.style.display = match ? "" : "none";
-							if (match && lastGroup) {
-							  lastGroup.style.display = "";
-							  lastGroup = null;
-							}
-						  }
-						});
-					  }
-					</script>
+  function filterLinks() {
+    const input = document.getElementById('filter').value.toLowerCase();
+    const rows = document.querySelectorAll('#linktable tr');
+    let lastGroup = null;
+    rows.forEach(row => {
+      if (row.classList.contains('group')) {
+        row.style.display = 'none';
+        lastGroup = row;
+      } else {
+        const match = row.cells[0].textContent.toLowerCase().includes(input);
+        row.style.display = match ? '' : 'none';
+        if (match && lastGroup) { lastGroup.style.display = ''; lastGroup = null; }
+      }
+    });
+  }
+</script>
 HTML;
 
         Layout::render($pageTitle, $body);

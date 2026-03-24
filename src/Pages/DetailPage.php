@@ -31,93 +31,74 @@ class DetailPage
 
         $pageTitle = ($title !== null && $title !== '') ? "MapJump – {$title}" : "MapJump – {$label}";
 
+        $markerSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#0d6efd"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3" fill="white"/></svg>';
+
         $body = <<<HTML
-<div class="card mb-4">
-  <div class="card-body">
-	<div class="d-flex justify-content-between align-items-center mb-3">
-		<h5 class="card-title mb-0"><i class="bi bi-geo-alt me-1"></i> Koordinaten</h5>
+<article>
+  <header style="display:flex; justify-content:space-between; align-items:center;">
+    <h5 style="margin:0"><i data-lucide="map-pin"></i> Koordinaten</h5>
 HTML;
 
         if ($link !== null) {
             $safeLink = htmlspecialchars($link);
             $body .= <<<HTML
-				<div class="btn-group" role="group" aria-label="Export">
-					<a href="{$safeLink}" class="btn btn-primary btn-sm" target="_blank">
-						<i class="bi bi-map me-1"></i> {$label} Dienst öffnen
-					</a>
-				</div>
-				</div>
+    <a href="{$safeLink}" class="btn-group" target="_blank" role="button">
+      <i data-lucide="map"></i> {$label} öffnen
+    </a>
 HTML;
         }
 
         $body .= <<<HTML
-		<p class="card-text">
-		  <strong>Dezimal:</strong> {$lat}, {$lon}<br>
-		  <strong>DMS:</strong> {$dms}<br>
-		  <strong>UTM:</strong> {$utm}<br>
-		  <strong>Geo URI:</strong> <a rel="nofollow" href="{$geoUri}">{$geoUri}</a><br>
-		</p>
-		<div class="btn-group mt-2" role="group">
-		  <a class="btn btn-outline-secondary btn-sm" href="?lat={$lat}&lon={$lon}&output=vcard">
-			<i class="bi bi-person-vcard me-1"></i> vCard herunterladen
-		  </a>
-		  <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="collapse" data-bs-target="#vcfBox">
-			<i class="bi bi-eye me-1"></i> vCard anzeigen
-		  </button>
-		</div>
-		<div id="vcfBox" class="collapse mt-2">
-		  <pre class="bg-light p-2 border rounded small">{$vcfEncoded}</pre>
-		</div>
+  </header>
+  <p>
+    <strong>Dezimal:</strong> {$lat}, {$lon}<br>
+    <strong>DMS:</strong> {$dms}<br>
+    <strong>UTM:</strong> {$utm}<br>
+    <strong>Geo URI:</strong> <a rel="nofollow" href="{$geoUri}">{$geoUri}</a>
+  </p>
+  <div x-data="{ show: false }" class="btn-group">
+    <a href="?lat={$lat}&lon={$lon}&output=vcard" role="button" class="outline secondary">
+      <i data-lucide="contact"></i> vCard herunterladen
+    </a>
+    <button class="outline secondary" @click="show = !show">
+      <i data-lucide="eye"></i> vCard anzeigen
+    </button>
+    <div x-show="show" x-cloak x-transition style="width:100%; margin-top:0.5rem">
+      <pre>{$vcfEncoded}</pre>
+    </div>
   </div>
-</div>
+</article>
 HTML;
 
         if ($address !== null && $address !== '') {
             $safeAddress = htmlspecialchars($address);
             $body .= <<<HTML
-<div class="card mb-4">
-  <div class="card-body">
-    <h5 class="card-title"><i class="bi bi-geo-alt me-1"></i> Adresse</h5>
-    <p class="card-text">{$safeAddress}</p>
-  </div>
-</div>
+<article>
+  <header><h5 style="margin:0"><i data-lucide="map-pin"></i> Adresse</h5></header>
+  <p>{$safeAddress}</p>
+</article>
 HTML;
         }
 
         if ($link !== null) {
             $body .= <<<HTML
-					<div id="map" class="map-container border rounded mb-4"></div>
-					<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
-					<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-					<script>
-					  const markerIcon = L.divIcon({ html: '<i class="bi bi-geo-alt-fill" style="font-size:1.8rem;color:#0d6efd;line-height:1"></i>', className: '', iconAnchor: [9, 30], popupAnchor: [0, -30] });
-					  const map = L.map('map').setView([{$lat}, {$lon}], 13);
-					  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-						attribution: '&copy; OpenStreetMap contributors'
-					  }).addTo(map);
-					  L.marker([{$lat}, {$lon}], {icon: markerIcon}).addTo(map)
-						.bindPopup('Koordinaten<br>{$lat}, {$lon}').openPopup();
-
-					  function filterLinks() {
-						const input = document.getElementById("filter").value.toLowerCase();
-						const rows = document.querySelectorAll("#linktable tr");
-						let lastGroup = null;
-
-						rows.forEach(row => {
-						  if (row.classList.contains("group")) {
-							row.style.display = "none";
-							lastGroup = row;
-						  } else {
-							const match = row.cells[0].textContent.toLowerCase().includes(input);
-							row.style.display = match ? "" : "none";
-							if (match && lastGroup) {
-							  lastGroup.style.display = "";
-							  lastGroup = null;
-							}
-						  }
-						});
-					  }
-					</script>
+<div id="map" class="map-container"></div>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script>
+  const markerIcon = L.divIcon({
+    html: '{$markerSvg}',
+    className: '',
+    iconAnchor: [14, 28],
+    popupAnchor: [0, -28]
+  });
+  const map = L.map('map').setView([{$lat}, {$lon}], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+  L.marker([{$lat}, {$lon}], {icon: markerIcon}).addTo(map)
+    .bindPopup('Koordinaten<br>{$lat}, {$lon}').openPopup();
+</script>
 HTML;
         }
 
