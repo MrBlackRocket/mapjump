@@ -97,6 +97,14 @@ MATOMO;
           }
         }
       }));
+      Alpine.data('forwardCountdown', () => ({
+        seconds: 45,
+        init() {
+          const id = setInterval(() => {
+            if (this.seconds > 0) { this.seconds--; } else { clearInterval(id); }
+          }, 1000);
+        }
+      }));
     });
   </script>
   <script src="public/js/lucide.min.js"></script>
