@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Geo\Tests;
 
-use Geo\GeoParam;
+use Geo\Geo\GeoParam;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Test;

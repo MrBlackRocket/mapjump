@@ -22,7 +22,7 @@ class IndexPage
         $geoUri = "geo:$lat,$lon";
         $address = ReverseGeocoder::getAddress($lat, $lon);
         $safeAddress = htmlspecialchars($address ?? '');
-        $groups = MapSource::renderLinks($lat, $lon);
+        $groups = MapSource::renderLinksWithAlias($lat, $lon);
 
         $pageTitle = ($title !== null && $title !== '')
             ? "MapJump – " . $title
@@ -97,10 +97,11 @@ HTML;
 
         foreach ($groups as $group => $links) {
             $body .= "<tr class='group bg-gray-100'><th class='px-3 py-2 text-left font-semibold text-gray-600 border border-gray-200' colspan='2'>" . htmlspecialchars($group) . "</th></tr>";
-            foreach ($links as $name => $url) {
+            foreach ($links as $name => $entry) {
                 $safeName = htmlspecialchars($name);
-                $safeUrl = htmlspecialchars($url);
-                $body .= "<tr class='border-b border-gray-100 hover:bg-gray-50'><td class='px-3 py-2'>{$safeName}</td><td class='px-3 py-2'><a href=\"{$safeUrl}\" target=\"_blank\" class=\"inline-flex items-center gap-1 text-blue-600 hover:underline\"><i data-lucide=\"external-link\"></i> Link</a></td></tr>";
+                $safeAlias = htmlspecialchars($entry['alias']);
+                $forwardHref = htmlspecialchars("?lat={$lat}&lon={$lon}&service={$safeAlias}&link=forward");
+                $body .= "<tr class='border-b border-gray-100 hover:bg-gray-50'><td class='px-3 py-2'>{$safeName}</td><td class='px-3 py-2'><a href=\"{$forwardHref}\" class=\"inline-flex items-center gap-1 text-blue-600 hover:underline\"><i data-lucide=\"external-link\"></i> Link</a></td></tr>";
             }
         }
 
