@@ -90,6 +90,24 @@ KML;
                 ]) . "\r\n";
                 break;
 
+            case 'gpx':
+                header('Content-Type: application/gpx+xml');
+                header('Content-Disposition: attachment; filename="coordinates.gpx"');
+                echo <<<GPX
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="MapJump"
+     xmlns="http://www.topografix.com/GPX/1/1"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+  <wpt lat="{$lat}" lon="{$lon}">
+    <ele>0</ele>
+    <name>{$escapedTitle}</name>
+    <desc>{$escapedAddress}</desc>
+  </wpt>
+</gpx>
+GPX;
+                break;
+
             case 'vcard':
                 header('Content-Type: text/vcard; charset=utf-8');
                 header('Content-Disposition: attachment; filename="coordinates.vcf"');
