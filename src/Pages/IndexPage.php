@@ -43,7 +43,7 @@ class IndexPage
         <i data-lucide="chevron-down"></i>
       </button>
       <ul class="absolute right-0 mt-1 w-52 bg-white rounded border border-gray-200 shadow-lg z-50 py-1 list-none"
-          x-show="open" x-cloak x-transition>
+          x-show="open" x-cloak x-transition style="z-index:1000">
         <li class="px-3 py-1 text-xs font-semibold text-gray-400 uppercase tracking-wide">Export als …</li>
         <li><a href="?lat={$lat}&lon={$lon}&output=geojson"
                class="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-700 hover:bg-blue-50">
@@ -54,6 +54,9 @@ class IndexPage
         <li><a href="?lat={$lat}&lon={$lon}&output=kml"
                class="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-700 hover:bg-blue-50">
           <i data-lucide="globe"></i> KML</a></li>
+        <li><a href="?lat={$lat}&lon={$lon}&output=gpx"
+               class="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-700 hover:bg-blue-50">
+          <i data-lucide="navigation"></i> GPX</a></li>
         <li class="border-t border-gray-100 mt-1 pt-1">
           <a href="?lat={$lat}&lon={$lon}&output=vcard"
              class="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-700 hover:bg-blue-50">
