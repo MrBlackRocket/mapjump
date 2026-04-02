@@ -55,9 +55,6 @@ class ForwardGeocoder
 
         $results = [];
         foreach ($raw as $item) {
-            if (!isset($item['lat'], $item['lon'], $item['display_name'])) {
-                continue;
-            }
             $results[] = [
                 'lat'          => (float) $item['lat'],
                 'lon'          => (float) $item['lon'],

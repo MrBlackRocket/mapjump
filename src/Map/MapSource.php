@@ -114,6 +114,42 @@ class MapSource
 
         return null;
     }
+
+    public static function getNameForAlias(string $alias): ?string
+    {
+        foreach (self::getSources(0.0, 0.0) as $group) {
+            foreach ($group as $name => $data) {
+                if (strtolower($data['alias']) === strtolower($alias)) {
+                    return $name;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Wie renderLinks(), aber jeder Eintrag enthält zusätzlich den Alias.
+     *
+     * @return array<string, array<string, array{alias: string, url: string}>>
+     */
+    public static function renderLinksWithAlias(float $lat, float $lon): array
+    {
+        $result = [];
+
+        foreach (self::getSources($lat, $lon) as $group => $entries) {
+            $links = [];
+            foreach ($entries as $name => $data) {
+                $links[$name] = [
+                    'alias' => $data['alias'],
+                    'url'   => str_replace(['@LAT@', '@LON@'], [strval($lat), strval($lon)], $data['url']),
+                ];
+            }
+            $result[$group] = $links;
+        }
+
+        return $result;
+    }
     /**
      * @return array<string, string>
      */

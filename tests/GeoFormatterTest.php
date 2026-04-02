@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Geo\Tests;
 
-use Geo\GeoFormatter;
+use Geo\Geo\GeoFormatter;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 

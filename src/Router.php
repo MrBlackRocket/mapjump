@@ -12,6 +12,7 @@ use Geo\Pages\GeocodePage;
 use Geo\Pages\GeocodeLoginPage;
 use Geo\Pages\IndexPage;
 use Geo\Pages\DetailPage;
+use Geo\Pages\ForwardPage;
 use Geo\Pages\StaticPage;
 
 /** @psalm-api */
@@ -26,6 +27,7 @@ class Router
         $title   = isset($_GET['title'])   && is_string($_GET['title'])   ? Helper::clean($_GET['title'])                  : null;
         $view    = isset($_GET['view'])    && is_string($_GET['view'])    ? Helper::clean($_GET['view'])                   : null;
         $output  = isset($_GET['output'])  && is_string($_GET['output'])  ? strtolower(trim($_GET['output']))              : null;
+        $link    = isset($_GET['link'])    && is_string($_GET['link'])    ? Helper::clean($_GET['link'])                    : null;
 
         // Spezialseiten
         if ($view === 'geocode') {
@@ -65,6 +67,12 @@ class Router
         // Exportfunktion
         if ($geo !== null && $output !== null) {
             Exporter::handle($output, $geo->lat, $geo->lon, $title);
+            return;
+        }
+
+        // Weiterleitungsseite mit Datenschutzhinweis
+        if ($geo !== null && $service !== null && $link === 'forward') {
+            ForwardPage::render($geo, $service, $title);
             return;
         }
 
