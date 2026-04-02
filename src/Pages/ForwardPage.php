@@ -48,9 +48,7 @@ class ForwardPage
 
   <p class="text-xs text-gray-400 break-all mb-5">{$safeDestUrl}</p>
 
-  <div x-data="{ seconds: 45 }"
-       x-init="setInterval(() => { if (seconds > 0) seconds-- }, 1000)"
-       class="text-xs text-gray-400 mb-5">
+  <div x-data="forwardCountdown" class="text-xs text-gray-400 mb-5">
     Automatische Weiterleitung in <span x-text="seconds"></span> Sekunden …
   </div>
 
