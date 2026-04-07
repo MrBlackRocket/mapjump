@@ -4,6 +4,9 @@
 # Sensible Konfiguration
 /config/.env
 
+# Private Deployment-Konfiguration (nicht für GitHub)
+/bin/deploy.sh
+
 # Datenbanken & Geodaten
 /data/*.mmdb
 /data/*.mmdb.gz
