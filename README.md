@@ -2,6 +2,7 @@
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 [![PHP Version](https://img.shields.io/badge/PHP-%3E%3D8.2-777BB4)](https://www.php.net/)
+[![CI](https://github.com/MrBlackRocket/mapjump/actions/workflows/ci.yml/badge.svg)](https://github.com/MrBlackRocket/mapjump/actions/workflows/ci.yml)
 
 **MapJump** is a modern PHP-based geographic coordinate tool that transforms coordinates into links to various map services. Inspired by [GeoHack](https://bitbucket.org/magnusmanske/geohack/) by Magnus Manske, MapJump provides a clean, privacy-focused interface for accessing multiple mapping platforms from a single coordinate input.
 
@@ -16,6 +17,22 @@ MapJump accepts geographic coordinates in multiple formats (decimal, degrees/min
 - **Frontend:** Tailwind CSS for responsive design, Alpine.js for interactivity
 - **Maps:** Leaflet.js for embedded map preview
 - **Security:** XSS protection, CSP headers, input validation
+
+## 🌟 The Story Behind MapJump
+
+In 2019, after 20 years of running **daenemarkfan.de**, I decided to migrate its content to MediaWiki. During this process, I discovered **GeoHack** – a brilliant tool, but one that came with challenges: it was tightly coupled to Wikipedia's infrastructure and incompatible with my PHP environment.
+
+The solution seemed simple: adapt it. I managed to get it working, but I was never truly satisfied with the result. It felt like a workaround rather than a proper solution.
+
+In 2023, I revisited the project and made another attempt to improve it. Yet again, it still felt like a **temporary fix** rather than something clean and maintainable.
+
+Finally, during the **summer vacation of 2025**, I decided to start fresh. This time with a clear plan: build a **modular, modern system** from the ground up. I completed the implementation, but testing and code quality took a backseat – as they often do.
+
+Fortunately, modern **AI tools** have made it much easier to catch up on those aspects. With their help, I refined the code, added comprehensive tests, and brought MapJump to a point where I can confidently say:
+
+**It's finally done.** ✨
+
+MapJump is now what I always wanted it to be: a clean, maintainable, and modern solution for geographic coordinate linking – free from the constraints of its predecessor and ready to be shared with the world.
 
 ## ✨ Features
 
