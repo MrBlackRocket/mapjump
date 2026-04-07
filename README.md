@@ -66,7 +66,7 @@ MapJump accepts geographic coordinates in multiple formats (decimal, degrees/min
 #### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/mapjump.git
+git clone https://github.com/MrBlackRocket/mapjump.git
 cd mapjump
 ```
 
@@ -395,8 +395,8 @@ MapJump is inspired by **GeoHack** by Magnus Manske, a geolink generator origina
 
 ## 📞 Support
 
-- **Issues:** Report bugs or request features via [GitHub Issues](https://github.com/yourusername/mapjump/issues)
-- **Discussions:** Join the conversation in [GitHub Discussions](https://github.com/yourusername/mapjump/discussions)
+- **Issues:** Report bugs or request features via [GitHub Issues](https://github.com/MrBlackRocket/mapjump/issues)
+- **Discussions:** Join the conversation in [GitHub Discussions](https://github.com/MrBlackRocket/mapjump/discussions)
 
 ---
 
