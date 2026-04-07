@@ -2,7 +2,7 @@
   "name": "mapjump/mapjump",
   "description": "A simple coordinate-based map link tool",
   "type": "project",
-  "license": "GPLv3",
+  "license": "GPL-3.0-or-later",
   "autoload": {
     "psr-4": {
       "Geo\\Geo\\": "src/Geo/",
