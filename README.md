@@ -1,5 +1,9 @@
 # MapJump
 
+<p align="center">
+  <img src="public/img/logo-banner.png" alt="MapJump" width="480">
+</p>
+
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 [![PHP Version](https://img.shields.io/badge/PHP-%3E%3D8.2-777BB4)](https://www.php.net/)
 [![CI](https://github.com/MrBlackRocket/mapjump/actions/workflows/ci.yml/badge.svg)](https://github.com/MrBlackRocket/mapjump/actions/workflows/ci.yml)
@@ -355,6 +359,10 @@ mapjump/
 │   └── .env.example        # Environment configuration template
 ├── data/                   # GeoIP database storage
 ├── logs/                   # Application logs
+├── public/                 # Web-accessible assets
+│   ├── css/                # Compiled stylesheets
+│   ├── img/                # Logo and favicon assets
+│   └── js/                 # Frontend libraries
 ├── src/                    # PHP source code
 │   ├── Auth/               # Authentication logic
 │   ├── Geo/                # Core coordinate handling

@@ -45,6 +45,8 @@ MATOMO;
   <title>{$safeTitle}</title>
   <link href="public/css/app.css" rel="stylesheet">
   <link href="public/css/leaflet.css" rel="stylesheet">
+  <link rel="icon" type="image/png" href="public/img/favicon.png">
+  <link rel="apple-touch-icon" href="public/img/icon-512.png">
   <style>[x-cloak]{display:none!important}[data-lucide]{display:inline-block;vertical-align:middle;width:1em;height:1em}</style>
 {$matomoHtml}
 </head>
