@@ -36,6 +36,11 @@ class Layout
 MATOMO;
         }
         $safeTitle = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
+        if ($title === 'MapJump') {
+            $headerHtml = '<h1 class="mb-8"><a href="index.php"><img src="public/img/logo-banner.png" alt="MapJump" class="h-20"></a></h1>';
+        } else {
+            $headerHtml = '<div class="flex items-center gap-3 mb-6"><a href="index.php"><img src="public/img/favicon.png" alt="MapJump" class="h-8 w-8"></a><h1 class="text-2xl font-bold">' . $safeTitle . '</h1></div>';
+        }
         echo <<<HTML
 <!doctype html>
 <html lang="de">
@@ -52,7 +57,7 @@ MATOMO;
 </head>
 <body class="bg-gray-50 text-gray-900 antialiased">
   <main class="max-w-4xl mx-auto px-4 py-8">
-    <h1 class="text-2xl font-bold mb-6">{$safeTitle}</h1>
+    {$headerHtml}
     {$body}
   </main>
   <footer class="text-center mt-12 pb-8 text-sm text-gray-500">
