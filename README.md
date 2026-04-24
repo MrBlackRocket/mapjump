@@ -5,7 +5,7 @@
 </p>
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
-[![PHP Version](https://img.shields.io/badge/PHP-%3E%3D8.2-777BB4)](https://www.php.net/)
+[![PHP Version](https://img.shields.io/badge/PHP-%3E%3D8.5-777BB4)](https://www.php.net/)
 [![CI](https://github.com/MrBlackRocket/mapjump/actions/workflows/ci.yml/badge.svg)](https://github.com/MrBlackRocket/mapjump/actions/workflows/ci.yml)
 
 **MapJump** is a modern PHP-based geographic coordinate tool that transforms coordinates into links to various map services. Inspired by [GeoHack](https://bitbucket.org/magnusmanske/geohack/) by Magnus Manske, MapJump provides a clean, privacy-focused interface for accessing multiple mapping platforms from a single coordinate input.
@@ -15,7 +15,7 @@
 MapJump accepts geographic coordinates in multiple formats (decimal, degrees/minutes/seconds, GeoHack format) and generates links to popular map services like Google Maps, OpenStreetMap, Bing Maps, and many more. It's built with modern web technologies and follows best practices for security and performance.
 
 **Key Technologies:**
-- **Backend:** PHP 8.2+ with PSR-4 autoloading, Composer dependency management
+- **Backend:** PHP 8.5+ with PSR-4 autoloading, Composer dependency management
 - **Logging:** Monolog for structured logging
 - **GeoIP:** GeoIP2 for country-based access control
 - **Frontend:** Tailwind CSS for responsive design, Alpine.js for interactivity
@@ -76,7 +76,7 @@ MapJump is now what I always wanted it to be: a clean, maintainable, and modern 
 
 ### Prerequisites
 
-- **PHP 8.2 or higher** with extensions: `mbstring`, `curl`, `json`
+- **PHP 8.5 or higher** with extensions: `mbstring`, `curl`, `json`
 - **Composer** for dependency management
 - **Node.js & npm** for building Tailwind CSS (development only)
 - **Apache** or **Nginx** web server
@@ -202,7 +202,7 @@ server {
     }
 
     location ~ \.php$ {
-        fastcgi_pass unix:/var/run/php/php8.2-fpm.sock;
+        fastcgi_pass unix:/var/run/php/php8.5-fpm.sock;
         fastcgi_index index.php;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         include fastcgi_params;
@@ -301,9 +301,6 @@ composer lint
 # Fix code style automatically
 composer fix
 
-# Run Psalm static analysis
-composer analyze
-
 # Run PHPStan analysis
 composer stan
 ```
@@ -388,7 +385,7 @@ Contributions are welcome! To contribute:
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/amazing-feature`
 3. Make your changes and add tests
-4. Ensure code passes quality checks: `composer lint && composer analyze && composer test`
+4. Ensure code passes quality checks: `composer lint && composer stan && composer test`
 5. Commit your changes: `git commit -m 'Add amazing feature'`
 6. Push to your branch: `git push origin feature/amazing-feature`
 7. Open a Pull Request
