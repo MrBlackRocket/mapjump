@@ -18,7 +18,7 @@
     ]
   },
   "require": {
-    "php": ">=8.2",
+    "php": ">=8.5",
     "monolog/monolog": "^3.0",
     "vlucas/phpdotenv": "^5.5",
     "geoip2/geoip2": "^2.12",
@@ -28,9 +28,8 @@
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.7",
     "friendsofphp/php-cs-fixer": "^3.50",
-    "vimeo/psalm": "^5.18",
-    "phpunit/phpunit": "^10.5",
-    "phpstan/phpstan": "^1.10"
+    "phpunit/phpunit": "^11.0",
+    "phpstan/phpstan": "^2.0"
   },
   "scripts": {
     "post-install-cmd": [
@@ -41,7 +40,6 @@
     ],
     "lint":    "vendor/bin/phpcs --standard=.phpcs.xml.dist src/ --colors -s",
     "fix":     "vendor/bin/php-cs-fixer fix src/ --rules=@PSR12",
-    "analyze": "vendor/bin/psalm --no-cache",
     "stan":    "vendor/bin/phpstan analyse",
     "test":    "vendor/bin/phpunit --colors=always"
   },
@@ -49,7 +47,7 @@
   "prefer-stable": true,
   "config": {
     "platform": {
-      "php": "8.2.0"
+      "php": "8.5.0"
     }
   }
 }

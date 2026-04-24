@@ -24,7 +24,7 @@ class EnvLoader
             }
 
             $parts = explode('=', $line, 2);
-            $key = trim($parts[0] ?? '');
+            $key = trim($parts[0]);
             $value = trim($parts[1] ?? '');
 
             if ($key === '') {
